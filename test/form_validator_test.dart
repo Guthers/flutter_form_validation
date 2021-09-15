@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:form_validator/form_validator.dart';
+import 'package:text_form_validator/form_validator.dart';
 
 void main() {
   test('Required form validation', () {

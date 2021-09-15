@@ -1,4 +1,4 @@
-name: form_validator
+name: text_form_validator
 description: A tool for producing informative form validation.
 version: 0.0.1
 homepage: https://github.com/Guthers/flutter_form_validation
