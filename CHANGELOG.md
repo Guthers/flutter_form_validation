@@ -11,3 +11,8 @@ Also adds the following new validators (along with tests):
     - Length (>, >=, ==, <=, <)
     - List (contains, !contains)
     - Regex (and a specified email helper)
+
+## 1.0.1
+Fixed a bug where the added message text was been ignored.
+
+Improved the email failure text to be less generic.

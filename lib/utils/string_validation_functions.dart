@@ -154,7 +154,7 @@ class StraingValidationFunctions {
   /// returned if provided, else the default message is returned. Othersie null
   /// is returned
   static String? inList(String? checkValue, List<String> list, {String? errorMessage}) {
-    return list.contains(checkValue) ? null : "Unexpected value";
+    return list.contains(checkValue) ? null : (errorMessage ?? "Unexpected value");
   }
 
   /// Checks if [checkValue] is not in the provided list
@@ -163,7 +163,7 @@ class StraingValidationFunctions {
   /// returned if provided, else the default message is returned. Othersie null
   /// is returned
   static String? notInList(String? checkValue, List<String> list, {String? errorMessage}) {
-    return list.contains(checkValue) ? "Unexpected value" : null;
+    return list.contains(checkValue) ? (errorMessage ?? "Unexpected value") : null;
   }
 
   /// Checks if [checkValue] can be matched by the regular expression [pattern]
@@ -172,7 +172,9 @@ class StraingValidationFunctions {
   /// [errorMessage] will be returned if provided, otherwise the default error.
   /// Otherwise null is returned
   static String? matches(String? checkValue, String pattern, {String? errorMessage}) {
-    return ((checkValue == null) || !RegExp(pattern).hasMatch(checkValue)) ? "Field fails validation" : null;
+    return ((checkValue == null) || !RegExp(pattern).hasMatch(checkValue))
+        ? (errorMessage ?? "Field fails validation")
+        : null;
   }
 
   static const String emailRegExp = r"[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,}";
@@ -183,6 +185,6 @@ class StraingValidationFunctions {
   /// will be returned if provided, otherwise the default error. Otherwise null
   /// is returned
   static String? isAnEmail(String? checkValue, {String? errorMessage}) {
-    return matches(checkValue, emailRegExp);
+    return matches(checkValue, emailRegExp, errorMessage: errorMessage ?? "Not a valid email");
   }
 }

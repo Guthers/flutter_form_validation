@@ -175,7 +175,7 @@ void main() {
   });
 
   test('Regex Email', () {
-    String error = "Field fails validation";
+    String error = "Not a valid email";
     ValidationFn validator = FormValidator.builder().isAnEmail().build();
 
     expect(error, validator(null));
@@ -193,5 +193,24 @@ void main() {
     expect(error, validator("test@.com"));
     expect(error, validator("test@gmail."));
     expect(error, validator("test@gmail.c"));
+
+    String error1 = "Oeee, bad stuff!";
+    ValidationFn validator1 = FormValidator.builder().isAnEmail(errorMessage: error1).build();
+
+    expect(error1, validator1(null));
+    expect(error1, validator1(""));
+
+    expect(null, validator1("asdjnasdkjlansdkjasndljk@gmail.com"));
+    expect(null, validator1("test@sankdnasdkl.com"));
+    expect(null, validator1("test@gmail.co"));
+    expect(null, validator1("test@gmail.coasdasda"));
+
+    expect(error1, validator1("test@@gmail.com"));
+    expect(error1, validator1("test@gmail..com"));
+    expect(error1, validator1("@gmail.com"));
+    expect(error1, validator1("@gmail.com"));
+    expect(error1, validator1("test@.com"));
+    expect(error1, validator1("test@gmail."));
+    expect(error1, validator1("test@gmail.c"));
   });
 }
