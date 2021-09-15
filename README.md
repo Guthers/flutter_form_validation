@@ -8,13 +8,7 @@ form fields.
 The `FormValidator` class is inteneded to be used to chain validation
 functions together to produce one validator function as required by Widgets
 such as `TextFormField`. The final closure using the build method matches
-the type required by the validator attribute for form fields '`String Function(String)`'.
-
-/// FormValidator
-///        .builder()
-///        .required()
-///        .numeric()
-///        .build()          --> String Function(String)
+the type required by the validator attribute for form fields '`String? Function(String?)`'.
 
 ## Getting started
 
