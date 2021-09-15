@@ -2,7 +2,7 @@ library form_validator;
 
 import 'dart:collection';
 
-import 'package:form_validator/utils/string_validation_functions.dart';
+import 'package:text_form_validator/utils/string_validation_functions.dart';
 
 typedef ValidationFn = String? Function(String?);
 
