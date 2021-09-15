@@ -12,13 +12,13 @@ the type required by the validator attribute for form fields '`String? Function(
 
 ## Getting started
 
-To use this pacakge add `form_validator` as a package in your pub file.
+To use this pacakge add `text_form_validator` as a package in your pub file.
 
 ## Usage
 
 
 ```dart
-import 'package:form_validator/form_validator.dart';
+import 'package:text_form_validator/form_validator.dart';
 // Basic, the field can't be null or empty
 TextFormField(validator: FormValidator.required().build());
 

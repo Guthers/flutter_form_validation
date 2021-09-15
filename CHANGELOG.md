@@ -19,3 +19,6 @@ Improved the email failure text to be less generic.
 
 ## 1.0.2
 Adds an example, and formats the library to 80 characters
+
+## 1.0.3
+Fixes incorrect naming from `form_validator` to `text_form_validator`
