@@ -20,7 +20,7 @@ To use this pacakge add `form_validator` as a package in your pub file.
 ```dart
 import 'package:form_validator/form_validator.dart';
 // Basic, the field can't be null or empty
-TextFormField(validator: FormValidator.reqd().build());
+TextFormField(validator: FormValidator.required().build());
 
 // All the messages which will be returned from validation can't be customised
 // as required. Each validator is run one after the other, so the message
@@ -49,3 +49,7 @@ TextFormField(validator: validator);
 
 The benefit of the chaining of functions allow user messages to be as customized
 as possible.
+
+For `StraingValidationFunctions` errors are provided in line. This allows for
+errors like in `StraingValidationFunctions.equals` where it specifies the equal
+value in the default error.

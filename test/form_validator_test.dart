@@ -3,7 +3,7 @@ import 'package:form_validator/form_validator.dart';
 
 void main() {
   test('Required form validation', () {
-    ValidationFn validator = FormValidator.builder().reqd().build();
+    ValidationFn validator = FormValidator.builder().required().build();
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
     expect("Field can't be empty", validator(""));
@@ -11,7 +11,7 @@ void main() {
   });
 
   test('Required form validation different messages', () {
-    ValidationFn validator = FormValidator.builder().reqd(emptyError: "Bad empty!", nullError: "OeeeNullo").build();
+    ValidationFn validator = FormValidator.builder().required(emptyError: "Bad empty!", nullError: "OeeeNullo").build();
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
     expect("Bad empty!", validator(""));
@@ -19,13 +19,7 @@ void main() {
   });
 
   test('Numeric form validation', () {
-    ValidationFn validator = FormValidator.builder()
-        .reqd()
-        .isNumeric()
-        .custom(
-          (p0) => null,
-        )
-        .build();
+    ValidationFn validator = FormValidator.builder().required().isNumeric().build();
     expect(null, validator("1.1001"));
     expect("Field must be a valid number", validator("This should fail"));
     expect("Field can't be empty", validator(""));
@@ -33,10 +27,10 @@ void main() {
   });
 
   test('DateTime form validation', () {
-    ValidationFn validator = FormValidator.builder().reqd().isDateTime(dateFormat: "dd.MM.yyyy").build();
+    ValidationFn validator = FormValidator.builder().required().isDateTime(dateFormat: "dd.MM.yyyy").build();
     expect(null, validator("10.02.1900"));
     expect("Field must be a valid date", validator("10/02/1900"));
-    ValidationFn validator2 = FormValidator.builder().reqd().isDateTime().build();
+    ValidationFn validator2 = FormValidator.builder().required().isDateTime().build();
     expect("Field must be a valid date", validator2("10.02.1900"));
     expect(null, validator2("10/02/1900"));
 
@@ -49,7 +43,7 @@ void main() {
     String customErorr = "Number must be a multiple of 100!";
 
     ValidationFn validator = FormValidator.builder()
-        .notNull(nullError: "Woah enter something!")
+        .notNull(errorMessage: "Woah enter something!")
         .notEmpty()
         .isNumeric()
         // If it hits the custom we can assume the types will convert properly

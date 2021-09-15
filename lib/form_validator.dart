@@ -2,132 +2,34 @@ library form_validator;
 
 import 'dart:collection';
 
-import 'package:intl/intl.dart';
+import 'package:form_validator/utils/string_validation_functions.dart';
 
 typedef ValidationFn = String? Function(String?);
 
 class FormValidator {
-  static ValidatorBuilder builder() {
-    return ValidatorBuilder(null, null, null);
-  }
-
-  static String? reqd(String? s, {String? nullError, String? emptyError}) {
-    return FormValidator.builder()._mergeFNs(
-      (s) => FormValidator.notNull(s, nullError: nullError),
-      (s) => FormValidator.notEmpty(s, emptyError: emptyError),
-    )(s);
-  }
-
-  static String? notNull(String? s, {String? nullError, String? emptyError}) {
-    if (s == null) {
-      return nullError ?? "Field can't be null";
-    }
-    return null;
-  }
-
-  static String? notEmpty(String? s, {String? nullError, String? emptyError}) {
-    if (s == "") {
-      return emptyError ?? "Field can't be empty";
-    }
-    return null;
-  }
-
-  static String? isNumeric(String? s, {String? nonNumericError}) {
-    if (s == null || num.tryParse(s) == null) {
-      return nonNumericError ?? "Field must be a valid number";
-    }
-    return null;
-  }
-
-  static String? isDateTime(String? s, {String dateFormat = "dd/MM/yyyy", bool parseLoose = false, String? dateError}) {
-    DateFormat df = DateFormat(dateFormat);
-    var parseFn = parseLoose ? df.parseLoose : df.parse;
-
-    try {
-      if (s == null) {
-        throw const FormatException();
-      }
-      parseFn(s);
-    } on FormatException {
-      return dateError ?? "Field must be a valid date";
-    }
-
-    return null;
-  }
-
-  static String? equals(String? s, String equals, {String? notEqualError}) {
-    if (s != equals) {
-      return notEqualError ?? "Field does not equal '$equals'";
-    }
-    return null;
-  }
-
-  static String? notEquals(String? s, String equals, {String? notEqualError}) {
-    if (s == equals) {
-      return notEqualError ?? "Field does equals '$equals'";
-    }
-    return null;
-  }
-}
-
-class ValidatorBuilder {
-  final ValidatorBuilder? prev;
-  ValidatorBuilder? next;
+  // Creates the linking to chain validators together
+  final FormValidator? prev;
+  FormValidator? next;
+  // The validation function at this node
   ValidationFn? validator;
 
-  ValidatorBuilder(this.prev, this.next, this.validator);
+  // The basic entry point for creating a new builder
+  factory FormValidator.builder() => FormValidator(null, null, null);
 
-  ValidatorBuilder reqd({String? nullError, String? emptyError}) {
-    return _chain((String? s) => FormValidator.reqd(s, nullError: nullError, emptyError: emptyError));
-  }
-
-  ValidatorBuilder notNull({String? nullError, String? emptyError}) {
-    return _chain((String? s) => FormValidator.notNull(s, nullError: nullError, emptyError: emptyError));
-  }
-
-  ValidatorBuilder notEmpty({String? nullError, String? emptyError}) {
-    return _chain((String? s) => FormValidator.notEmpty(s, nullError: nullError, emptyError: emptyError));
-  }
-
-  ValidatorBuilder isNumeric({String? nonNumericError}) {
-    return _chain((String? s) => FormValidator.isNumeric(s, nonNumericError: nonNumericError));
-  }
-
-  ValidatorBuilder isDateTime({String? dateError, String dateFormat = "dd/MM/yyyy", bool parseLoose = false}) {
-    return _chain((String? s) =>
-        FormValidator.isDateTime(s, dateError: dateError, dateFormat: dateFormat, parseLoose: parseLoose));
-  }
-
-  ValidatorBuilder isEqualTo(String equals, {String? notEqualError}) {
-    return _chain((String? s) => FormValidator.equals(s, equals, notEqualError: notEqualError));
-  }
-
-  ValidatorBuilder notEqualTo(String equals, {String? notEqualError}) {
-    return _chain((String? s) => FormValidator.notEquals(s, equals, notEqualError: notEqualError));
-  }
-
-  /// Allows for a custom function to be added into the chaining sequence
-  ValidatorBuilder custom(ValidationFn fn) {
-    return _chain(fn);
-  }
+  FormValidator(this.prev, this.next, this.validator);
 
   /// Used to help link together the stages of the builder
-  ValidatorBuilder _chain(ValidationFn fn) {
-    ValidatorBuilder nxt = ValidatorBuilder(this, null, fn);
+  FormValidator _chain(ValidationFn fn) {
+    FormValidator nxt = FormValidator(this, null, fn);
     next = nxt;
     return nxt;
   }
 
-  /// Merges two String function types from 'String -> String -> String' into 'String -> String'
-  ValidationFn _mergeFNs(ValidationFn a, ValidationFn b) {
-    return (String? x) => a(x) ?? b(x);
-  }
-
-  // Used to merge all links of the chain into the final function closure
+  /// Used to merge all links of the chain into a final function of type [ValidationFn]
   ValidationFn build() {
     ListQueue<ValidationFn> validators = ListQueue();
 
-    ValidatorBuilder? current = this;
+    FormValidator? current = this;
 
     while (current != null) {
       // current.validators type couldn't be resolved properly in the add
@@ -139,6 +41,90 @@ class ValidatorBuilder {
       current = current.prev;
     }
 
-    return validators.fold((String? _) => null, (a, b) => _mergeFNs(a, b));
+    return validators.fold((String? _) => null, (a, b) => mergeFNs(a, b));
+  }
+
+  ///
+  /// The below functions are provided to allow for extension of the base
+  /// validation functionality.
+
+  /// Allows for a custom function to be added into the chaining sequence
+  ///
+  /// Below is an example of ensuring that a number is a multiple of 100.
+  /// ```dart
+  /// ValidationFn validator = FormValidator.builder()
+  ///     .notNull()
+  ///     .notEmpty()
+  ///     .isNumeric()
+  ///     .custom((p0) => (p0 == null || (num.parse(p0) % 100) != 0) ? customErorr : null)
+  ///     .build();
+  /// ```
+  FormValidator custom(ValidationFn fn) {
+    return _chain(fn);
+  }
+
+  /// Merges two functions of type [ValidationFn] into one function of type [ValidationFn]
+  ///
+  /// Below is an example of ensuring that a number is a multiple of 100.
+  /// ```dart
+  /// FormValidator
+  ///   .builder()
+  ///   .notNull()
+  ///   .notEmpty()
+  ///   .build();
+  /// //Is the same as
+  /// FormValidator
+  ///   .mergeFNs(
+  ///     StraingValidationFunctions.notNull,
+  ///     StraingValidationFunctions.notEmpty
+  ///   );
+  /// ```
+  static ValidationFn mergeFNs(ValidationFn a, ValidationFn b) {
+    return (String? x) => a(x) ?? b(x);
+  }
+
+  ///
+  /// Below are base case validatior functions, they are provided to cover
+  /// most basic use cases that might be encountered.
+  ///
+  /// They use the validation functions from [StraingValidationFunctions] to
+  /// complete the actual validation
+  ///
+
+  /// Adds [StraingValidationFunctions.required] to the function validation chain
+  FormValidator required({String? nullError, String? emptyError}) {
+    return _chain((String? s) =>
+        StraingValidationFunctions.required(s, nullErrorMessage: nullError, emptyErrorMessage: emptyError));
+  }
+
+  /// Adds [StraingValidationFunctions.notNull] to the function validation chain
+  FormValidator notNull({String? errorMessage}) {
+    return _chain((String? s) => StraingValidationFunctions.notNull(s, errorMessage: errorMessage));
+  }
+
+  /// Adds [StraingValidationFunctions.notEmpty] to the function validation chain
+  FormValidator notEmpty({String? errorMessage}) {
+    return _chain((String? s) => StraingValidationFunctions.notEmpty(s, errorMessage: errorMessage));
+  }
+
+  /// Adds [StraingValidationFunctions.isNumeric] to the function validation chain
+  FormValidator isNumeric({String? errorMessage}) {
+    return _chain((String? s) => StraingValidationFunctions.isNumeric(s, errorMessage: errorMessage));
+  }
+
+  /// Adds [StraingValidationFunctions.isDateTime] to the function validation chain
+  FormValidator isDateTime({String? errorMessage, String dateFormat = "dd/MM/yyyy", bool parseLoose = false}) {
+    return _chain((String? s) => StraingValidationFunctions.isDateTime(s,
+        errorMessage: errorMessage, dateFormat: dateFormat, parseLoose: parseLoose));
+  }
+
+  /// Adds [StraingValidationFunctions.equals] to the function validation chain
+  FormValidator isEqualTo(String equals, {String? errorMessage}) {
+    return _chain((String? s) => StraingValidationFunctions.equals(s, equals, errorMessage: errorMessage));
+  }
+
+  /// Adds [StraingValidationFunctions.notEquals] to the function validation chain
+  FormValidator notEqualTo(String equals, {String? errorMessage}) {
+    return _chain((String? s) => StraingValidationFunctions.notEquals(s, equals, errorMessage: errorMessage));
   }
 }
