@@ -16,3 +16,6 @@ Also adds the following new validators (along with tests):
 Fixed a bug where the added message text was been ignored.
 
 Improved the email failure text to be less generic.
+
+## 1.0.2
+Adds an example, and formats the library to 80 characters

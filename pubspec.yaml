@@ -2,7 +2,7 @@ name: text_form_validator
 description:
     Provides a simple way to combine validation functions, failing and
     providing the most informative error to the user.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/Guthers/flutter_form_validation
 
 environment:
