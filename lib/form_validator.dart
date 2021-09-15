@@ -93,83 +93,104 @@ class FormValidator {
 
   /// Adds [StraingValidationFunctions.required] to the function validation chain
   FormValidator required({String? nullError, String? emptyError}) {
-    return _chain((String? s) =>
-        StraingValidationFunctions.required(s, nullErrorMessage: nullError, emptyErrorMessage: emptyError));
+    return _chain((String? s) => StraingValidationFunctions.required(s,
+        nullErrorMessage: nullError, emptyErrorMessage: emptyError));
   }
 
   /// Adds [StraingValidationFunctions.notNull] to the function validation chain
   FormValidator notNull({String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.notNull(s, errorMessage: errorMessage));
+    return _chain((String? s) =>
+        StraingValidationFunctions.notNull(s, errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.notEmpty] to the function validation chain
   FormValidator notEmpty({String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.notEmpty(s, errorMessage: errorMessage));
+    return _chain((String? s) =>
+        StraingValidationFunctions.notEmpty(s, errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.isNumeric] to the function validation chain
   FormValidator isNumeric({String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.isNumeric(s, errorMessage: errorMessage));
+    return _chain((String? s) =>
+        StraingValidationFunctions.isNumeric(s, errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.isDateTime] to the function validation chain
-  FormValidator isDateTime({String? errorMessage, String dateFormat = "dd/MM/yyyy", bool parseLoose = false}) {
+  FormValidator isDateTime(
+      {String? errorMessage,
+      String dateFormat = "dd/MM/yyyy",
+      bool parseLoose = false}) {
     return _chain((String? s) => StraingValidationFunctions.isDateTime(s,
-        errorMessage: errorMessage, dateFormat: dateFormat, parseLoose: parseLoose));
+        errorMessage: errorMessage,
+        dateFormat: dateFormat,
+        parseLoose: parseLoose));
   }
 
   /// Adds [StraingValidationFunctions.equals] to the function validation chain
   FormValidator isEqualTo(String equals, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.equals(s, equals, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.equals(s, equals,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.notEquals] to the function validation chain
   FormValidator notEqualTo(String equals, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.notEquals(s, equals, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.notEquals(s, equals,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.lengthGt] to the function validation chain
   FormValidator lengthGt(int length, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.lengthGt(s, length, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.lengthGt(s, length,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.lengthGtEq] to the function validation chain
   FormValidator lengthGtEq(int length, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.lengthGtEq(s, length, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.lengthGtEq(
+        s, length,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.lengthLt] to the function validation chain
   FormValidator lengthLt(int length, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.lengthLt(s, length, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.lengthLt(s, length,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.lengthLtEq] to the function validation chain
   FormValidator lengthLtEq(int length, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.lengthLtEq(s, length, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.lengthLtEq(
+        s, length,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.lengthEq] to the function validation chain
   FormValidator lengthEq(int length, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.lengthEq(s, length, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.lengthEq(s, length,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.inList] to the function validation chain
   FormValidator inList(List<String> list, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.inList(s, list, errorMessage: errorMessage));
+    return _chain((String? s) =>
+        StraingValidationFunctions.inList(s, list, errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.notInList] to the function validation chain
   FormValidator notInList(List<String> list, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.notInList(s, list, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.notInList(s, list,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.matches] to the function validation chain
   FormValidator matches(String pattern, {String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.matches(s, pattern, errorMessage: errorMessage));
+    return _chain((String? s) => StraingValidationFunctions.matches(s, pattern,
+        errorMessage: errorMessage));
   }
 
   /// Adds [StraingValidationFunctions.isAnEmail] to the function validation chain
   FormValidator isAnEmail({String? errorMessage}) {
-    return _chain((String? s) => StraingValidationFunctions.isAnEmail(s, errorMessage: errorMessage));
+    return _chain((String? s) =>
+        StraingValidationFunctions.isAnEmail(s, errorMessage: errorMessage));
   }
 }

@@ -11,7 +11,9 @@ void main() {
   });
 
   test('Required form validation different messages', () {
-    ValidationFn validator = FormValidator.builder().required(emptyError: "Bad empty!", nullError: "OeeeNullo").build();
+    ValidationFn validator = FormValidator.builder()
+        .required(emptyError: "Bad empty!", nullError: "OeeeNullo")
+        .build();
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
     expect("Bad empty!", validator(""));
@@ -19,7 +21,8 @@ void main() {
   });
 
   test('Numeric form validation', () {
-    ValidationFn validator = FormValidator.builder().required().isNumeric().build();
+    ValidationFn validator =
+        FormValidator.builder().required().isNumeric().build();
     expect(null, validator("1.1001"));
     expect("Field must be a valid number", validator("This should fail"));
     expect("Field can't be empty", validator(""));
@@ -27,10 +30,14 @@ void main() {
   });
 
   test('DateTime form validation', () {
-    ValidationFn validator = FormValidator.builder().required().isDateTime(dateFormat: "dd.MM.yyyy").build();
+    ValidationFn validator = FormValidator.builder()
+        .required()
+        .isDateTime(dateFormat: "dd.MM.yyyy")
+        .build();
     expect(null, validator("10.02.1900"));
     expect("Field must be a valid date", validator("10/02/1900"));
-    ValidationFn validator2 = FormValidator.builder().required().isDateTime().build();
+    ValidationFn validator2 =
+        FormValidator.builder().required().isDateTime().build();
     expect("Field must be a valid date", validator2("10.02.1900"));
     expect(null, validator2("10/02/1900"));
 
@@ -47,7 +54,8 @@ void main() {
         .notEmpty()
         .isNumeric()
         // If it hits the custom we can assume the types will convert properly
-        .custom((p0) => (p0 == null || (num.parse(p0) % 100) != 0) ? customErorr : null)
+        .custom((p0) =>
+            (p0 == null || (num.parse(p0) % 100) != 0) ? customErorr : null)
         .build();
 
     expect(null, validator("100"));
@@ -195,7 +203,8 @@ void main() {
     expect(error, validator("test@gmail.c"));
 
     String error1 = "Oeee, bad stuff!";
-    ValidationFn validator1 = FormValidator.builder().isAnEmail(errorMessage: error1).build();
+    ValidationFn validator1 =
+        FormValidator.builder().isAnEmail(errorMessage: error1).build();
 
     expect(error1, validator1(null));
     expect(error1, validator1(""));

@@ -3,9 +3,12 @@ import 'package:intl/intl.dart';
 // This class provides the base validation functions used by the FormValidator
 class StraingValidationFunctions {
   /// Checks that the string is not null then checks if the string is empty
-  static String? required(String? checkValue, {String? nullErrorMessage, String? emptyErrorMessage}) {
-    return StraingValidationFunctions.notNull(checkValue, errorMessage: nullErrorMessage) ??
-        StraingValidationFunctions.notEmpty(checkValue, errorMessage: emptyErrorMessage);
+  static String? required(String? checkValue,
+      {String? nullErrorMessage, String? emptyErrorMessage}) {
+    return StraingValidationFunctions.notNull(checkValue,
+            errorMessage: nullErrorMessage) ??
+        StraingValidationFunctions.notEmpty(checkValue,
+            errorMessage: emptyErrorMessage);
   }
 
   /// Checks that [checkValue] is not null.
@@ -48,7 +51,9 @@ class StraingValidationFunctions {
   /// provided by [dateFormat]. If [checkValue] can't be passed then [errorMessage] if provided,
   /// or the default error if not. Otherwise [null] is returned
   static String? isDateTime(String? checkValue,
-      {String dateFormat = "dd/MM/yyyy", bool parseLoose = false, errorMessage}) {
+      {String dateFormat = "dd/MM/yyyy",
+      bool parseLoose = false,
+      errorMessage}) {
     DateFormat df = DateFormat(dateFormat);
     var parseFn = parseLoose ? df.parseLoose : df.parse;
 
@@ -69,7 +74,8 @@ class StraingValidationFunctions {
   /// Attempts to compare [checkValue] and [compareValue]. If they are not
   /// equal than [errorMessage] is returned if provided, or the default error if not.
   /// Otherwise [null] is returned
-  static String? equals(String? checkValue, String compareValue, {String? errorMessage}) {
+  static String? equals(String? checkValue, String compareValue,
+      {String? errorMessage}) {
     if (checkValue != compareValue) {
       return errorMessage ?? "Field does not equal '$compareValue'";
     }
@@ -81,7 +87,8 @@ class StraingValidationFunctions {
   /// Attempts to compare [checkValue] and [compareValue]. If they are equal than
   /// [errorMessage] is returned if provided, or the default error if not.
   /// Otherwise [null] is returned
-  static String? notEquals(String? checkValue, String compareValue, {String? errorMessage}) {
+  static String? notEquals(String? checkValue, String compareValue,
+      {String? errorMessage}) {
     if (checkValue == compareValue) {
       return errorMessage ?? "Field does equals '$compareValue'";
     }
@@ -105,7 +112,8 @@ class StraingValidationFunctions {
   /// If [checkValue] is not null and [checkValue.length] is not greater than or
   /// equal to [gtEq] than [errorMessage] is returned if provided, else the default
   /// error is provided. Otherwise null is returned
-  static String? lengthGtEq(String? checkValue, int gtEq, {String? errorMessage}) {
+  static String? lengthGtEq(String? checkValue, int gtEq,
+      {String? errorMessage}) {
     if (checkValue != null && !(checkValue.length >= gtEq)) {
       return errorMessage ?? "Field length not greater than or equal too $gtEq";
     }
@@ -129,7 +137,8 @@ class StraingValidationFunctions {
   /// If [checkValue] is not null and [checkValue.length] is not less than or
   /// equal to [ltEq] than [errorMessage] is returned if provided, else the default
   /// is provided. Otherwise null is returned
-  static String? lengthLtEq(String? checkValue, int ltEq, {String? errorMessage}) {
+  static String? lengthLtEq(String? checkValue, int ltEq,
+      {String? errorMessage}) {
     if (checkValue != null && !(checkValue.length <= ltEq)) {
       return errorMessage ?? "Field length not less than or equal too $ltEq";
     }
@@ -153,8 +162,11 @@ class StraingValidationFunctions {
   /// If [checkValue] is not in the provided list than [errorMessage] will be
   /// returned if provided, else the default message is returned. Othersie null
   /// is returned
-  static String? inList(String? checkValue, List<String> list, {String? errorMessage}) {
-    return list.contains(checkValue) ? null : (errorMessage ?? "Unexpected value");
+  static String? inList(String? checkValue, List<String> list,
+      {String? errorMessage}) {
+    return list.contains(checkValue)
+        ? null
+        : (errorMessage ?? "Unexpected value");
   }
 
   /// Checks if [checkValue] is not in the provided list
@@ -162,8 +174,11 @@ class StraingValidationFunctions {
   /// If [checkValue] is in the provided list than [errorMessage] will be
   /// returned if provided, else the default message is returned. Othersie null
   /// is returned
-  static String? notInList(String? checkValue, List<String> list, {String? errorMessage}) {
-    return list.contains(checkValue) ? (errorMessage ?? "Unexpected value") : null;
+  static String? notInList(String? checkValue, List<String> list,
+      {String? errorMessage}) {
+    return list.contains(checkValue)
+        ? (errorMessage ?? "Unexpected value")
+        : null;
   }
 
   /// Checks if [checkValue] can be matched by the regular expression [pattern]
@@ -171,13 +186,15 @@ class StraingValidationFunctions {
   /// If [checkValue] is null or is not matched by the RegEx [pattern] the
   /// [errorMessage] will be returned if provided, otherwise the default error.
   /// Otherwise null is returned
-  static String? matches(String? checkValue, String pattern, {String? errorMessage}) {
+  static String? matches(String? checkValue, String pattern,
+      {String? errorMessage}) {
     return ((checkValue == null) || !RegExp(pattern).hasMatch(checkValue))
         ? (errorMessage ?? "Field fails validation")
         : null;
   }
 
-  static const String emailRegExp = r"[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,}";
+  static const String emailRegExp =
+      r"[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,}";
 
   /// Checks if [checkValue] can be matched by the regular expression [emailRegExp]
   ///
@@ -185,6 +202,7 @@ class StraingValidationFunctions {
   /// will be returned if provided, otherwise the default error. Otherwise null
   /// is returned
   static String? isAnEmail(String? checkValue, {String? errorMessage}) {
-    return matches(checkValue, emailRegExp, errorMessage: errorMessage ?? "Not a valid email");
+    return matches(checkValue, emailRegExp,
+        errorMessage: errorMessage ?? "Not a valid email");
   }
 }
