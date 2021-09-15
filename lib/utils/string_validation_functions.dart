@@ -14,7 +14,7 @@ class StraingValidationFunctions {
   /// Checks that [checkValue] is not null.
   ///
   /// If [checkValue] is null the function will return [errorMessage] if provided,
-  /// or the default error if not. Otherwise [null] is returned
+  /// or the default error if not. Otherwise `null` is returned
   static String? notNull(String? checkValue, {String? errorMessage}) {
     if (checkValue == null) {
       return errorMessage ?? "Field can't be empty";
@@ -22,10 +22,10 @@ class StraingValidationFunctions {
     return null;
   }
 
-  /// Checks that [checkValue] is not equal to [""].
+  /// Checks that [checkValue] is not equal to `""`.
   ///
-  /// If [checkValue] is equal to [""] the function will return [errorMessage] if provided,
-  /// or the default error if not. Otherwise [null] is returned
+  /// If [checkValue] is equal to `""` the function will return [errorMessage] if provided,
+  /// or the default error if not. Otherwise `null` is returned
   static String? notEmpty(String? checkValue, {String? errorMessage}) {
     if (checkValue == "") {
       return errorMessage ?? "Field can't be empty";
@@ -37,7 +37,7 @@ class StraingValidationFunctions {
   ///
   /// If [checkValue] can't be turned into a number the function will return
   /// [errorMessage] if provided, or the default error if not.
-  /// Otherwise [null] is returned
+  /// Otherwise `null` is returned
   static String? isNumeric(String? checkValue, {String? errorMessage}) {
     if (checkValue == null || num.tryParse(checkValue) == null) {
       return errorMessage ?? "Field must be a valid number";
@@ -49,7 +49,7 @@ class StraingValidationFunctions {
   ///
   /// [DateFormat] will be used to attempt to parse [checkValue]. Using the format
   /// provided by [dateFormat]. If [checkValue] can't be passed then [errorMessage] if provided,
-  /// or the default error if not. Otherwise [null] is returned
+  /// or the default error if not. Otherwise null is returned
   static String? isDateTime(String? checkValue,
       {String dateFormat = "dd/MM/yyyy",
       bool parseLoose = false,
@@ -73,7 +73,7 @@ class StraingValidationFunctions {
   ///
   /// Attempts to compare [checkValue] and [compareValue]. If they are not
   /// equal than [errorMessage] is returned if provided, or the default error if not.
-  /// Otherwise [null] is returned
+  /// Otherwise `null` is returned
   static String? equals(String? checkValue, String compareValue,
       {String? errorMessage}) {
     if (checkValue != compareValue) {
@@ -86,7 +86,7 @@ class StraingValidationFunctions {
   ///
   /// Attempts to compare [checkValue] and [compareValue]. If they are equal than
   /// [errorMessage] is returned if provided, or the default error if not.
-  /// Otherwise [null] is returned
+  /// Otherwise `null` is returned
   static String? notEquals(String? checkValue, String compareValue,
       {String? errorMessage}) {
     if (checkValue == compareValue) {
@@ -97,7 +97,7 @@ class StraingValidationFunctions {
 
   /// Checks that the length of [checkValue] is greater than then [gt]
   ///
-  /// If [checkValue] is not null and [checkValue.length] is not greater than
+  /// If [checkValue] is not null and `checkValue.length` is not greater than
   /// [gt] than [errorMessage] is returned if provided, else the default error
   /// is provided. Otherwise null is returned
   static String? lengthGt(String? checkValue, int gt, {String? errorMessage}) {
@@ -109,7 +109,7 @@ class StraingValidationFunctions {
 
   /// Checks that the length of [checkValue] is greater then or equal to [gtEq]
   ///
-  /// If [checkValue] is not null and [checkValue.length] is not greater than or
+  /// If [checkValue] is not null and `checkValue.length` is not greater than or
   /// equal to [gtEq] than [errorMessage] is returned if provided, else the default
   /// error is provided. Otherwise null is returned
   static String? lengthGtEq(String? checkValue, int gtEq,
@@ -122,7 +122,7 @@ class StraingValidationFunctions {
 
   /// Checks that the length of [checkValue] is less then [lt]
   ///
-  /// If [checkValue] is not null and [checkValue.length] is not less than
+  /// If [checkValue] is not null and `checkValue.length` is not less than
   /// [lt] than [errorMessage] is returned if provided, else the default error
   /// is provided. Otherwise null is returned
   static String? lengthLt(String? checkValue, int lt, {String? errorMessage}) {
@@ -134,7 +134,7 @@ class StraingValidationFunctions {
 
   /// Checks that the length of [checkValue] is less then or equal to [ltEq]
   ///
-  /// If [checkValue] is not null and [checkValue.length] is not less than or
+  /// If [checkValue] is not null and `checkValue.length` is not less than or
   /// equal to [ltEq] than [errorMessage] is returned if provided, else the default
   /// is provided. Otherwise null is returned
   static String? lengthLtEq(String? checkValue, int ltEq,
@@ -147,7 +147,7 @@ class StraingValidationFunctions {
 
   /// Checks that the length of [checkValue] is equal to [eq]
   ///
-  /// If [checkValue] is not null and [checkValue.length] is nequal to [ltEq]
+  /// If [checkValue] is not null and `checkValue.length` is nequal to [ltEq]
   /// than [errorMessage] is returned if provided, else the default is provided.
   /// Otherwise null is returned
   static String? lengthEq(String? checkValue, int eq, {String? errorMessage}) {

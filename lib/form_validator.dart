@@ -1,3 +1,5 @@
+/// form_validator provides a way of composing different validation functions
+/// into one result for use in TextFormFields
 library form_validator;
 
 import 'dart:collection';
