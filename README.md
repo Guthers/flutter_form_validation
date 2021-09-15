@@ -45,6 +45,29 @@ ValidationFn validator = FormValidator.builder()
 TextFormField(validator: validator);
 ```
 
+## Current Default Functions
+Below is a list of all current default functions provided, as specified these
+are here to assist the user, and may not be exhaustive, see `FormValidator.custom`
+for adding custom functions. The descriptions provided here are breif, check the
+functions themselves in `utils/string_validation_functions.dart` for full details.
+
+### Default Functions List
+ - `notNull`: Not equal to null
+ - `notEmpty`: Not equal to ""
+ - `required`: Combines `notNull` and `notEmpty`
+ - `isNumeric`: `num.tryParse` != null
+ - `isDateTime`: The value can be formatted into a date (can specify custom format)
+ - `equals`: == provided value
+ - `notEquals`: != provided value
+ - `lengthGt`: value.length > providedValue
+ - `lengthGtEq`: value.length >= providedValue
+ - `lengthLt`: value.length < providedValue
+ - `lengthLtEq`: value.length <= providedValue
+ - `lengthEq`: value.length == providedValue
+ - `inList`: The value is in the provided list
+ - `notInList`: The value is not in the provided list
+ - `matches`: The value matches the supplied regex pattern
+ - `isAnEmail`: The value matches the `StraingValidationFunctions.emailRegExp` pattern
 ## Additional information
 
 The benefit of the chaining of functions allow user messages to be as customized
