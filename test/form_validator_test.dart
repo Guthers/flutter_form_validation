@@ -7,7 +7,7 @@ void main() {
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
     expect("Field can't be empty", validator(""));
-    expect("Field can't be null", validator(null));
+    expect("Field can't be empty", validator(null));
   });
 
   test('Required form validation different messages', () {
@@ -23,7 +23,7 @@ void main() {
     expect(null, validator("1.1001"));
     expect("Field must be a valid number", validator("This should fail"));
     expect("Field can't be empty", validator(""));
-    expect("Field can't be null", validator(null));
+    expect("Field can't be empty", validator(null));
   });
 
   test('DateTime form validation', () {
@@ -36,7 +36,7 @@ void main() {
 
     expect("Field must be a valid date", validator("As should this"));
     expect("Field can't be empty", validator(""));
-    expect("Field can't be null", validator(null));
+    expect("Field can't be empty", validator(null));
   });
 
   test('Custom function validators', () {
@@ -57,5 +57,141 @@ void main() {
     expect("Field must be a valid number", validator("This should fail"));
     expect("Field can't be empty", validator(""));
     expect("Woah enter something!", validator(null));
+  });
+
+  test('Length GT Test', () {
+    int len = 3;
+    String error = "Field length not greater than 3";
+    ValidationFn validator = FormValidator.builder().lengthGt(len).build();
+
+    // Null failure is undefined for this validation
+    expect(null, validator(null));
+    expect(error, validator(""));
+    expect(error, validator("12"));
+    expect(error, validator("123"));
+    expect(null, validator("1234"));
+    expect(null, validator("1234" * 5));
+  });
+
+  test('Length GT EQ Test', () {
+    int len = 3;
+    String error = "Field length not greater than or equal too 3";
+    ValidationFn validator = FormValidator.builder().lengthGtEq(len).build();
+
+    // Null failure is undefined for this validation
+    expect(null, validator(null));
+    expect(error, validator(""));
+    expect(error, validator("12"));
+    expect(null, validator("123"));
+    expect(null, validator("1234"));
+    expect(null, validator("1234" * 5));
+  });
+
+  test('Length LT Test', () {
+    int len = 3;
+    String error = "Field length not less than 3";
+    ValidationFn validator = FormValidator.builder().lengthLt(len).build();
+
+    // Null failure is undefined for this validation
+    expect(null, validator(null));
+    expect(null, validator(""));
+    expect(null, validator("12"));
+    expect(error, validator("123"));
+    expect(error, validator("1234"));
+    expect(error, validator("1234" * 5));
+  });
+
+  test('Length LT EQ Test', () {
+    int len = 3;
+    String error = "Field length not less than or equal too 3";
+    ValidationFn validator = FormValidator.builder().lengthLtEq(len).build();
+
+    // Null failure is undefined for this validation
+    expect(null, validator(null));
+    expect(null, validator(""));
+    expect(null, validator("12"));
+    expect(null, validator("123"));
+    expect(error, validator("1234"));
+    expect(error, validator("1234" * 5));
+  });
+
+  test('Length EQ Test', () {
+    int len = 3;
+    String error = "Field length not equal too 3";
+    ValidationFn validator = FormValidator.builder().lengthEq(len).build();
+
+    // Null failure is undefined for this validation
+    expect(null, validator(null));
+    expect(error, validator(""));
+    expect(error, validator("12"));
+    expect(null, validator("123"));
+    expect(error, validator("1234"));
+    expect(error, validator("1234" * 5));
+  });
+
+  test('In List', () {
+    List<String> list = ['a', 'b', 'c'];
+    String error = "Unexpected value";
+    ValidationFn validator = FormValidator.builder().inList(list).build();
+
+    expect(error, validator(null));
+    expect(error, validator(""));
+    expect(error, validator("12"));
+    expect(null, validator("a"));
+    expect(null, validator("b"));
+    expect(null, validator("c"));
+    expect(error, validator("cc"));
+  });
+
+  test('Not In List', () {
+    List<String> list = ['a', 'b', 'c'];
+    String error = "Unexpected value";
+    ValidationFn validator = FormValidator.builder().notInList(list).build();
+
+    expect(null, validator(null));
+    expect(null, validator(""));
+    expect(null, validator("12"));
+    expect(error, validator("a"));
+    expect(error, validator("b"));
+    expect(error, validator("c"));
+    expect(null, validator("cc"));
+  });
+
+  test('Regex', () {
+    String pattern = r"[a-z][0-9]+_end";
+    String error = "Field fails validation";
+    ValidationFn validator = FormValidator.builder().matches(pattern).build();
+
+    expect(error, validator(null));
+    expect(error, validator(""));
+
+    expect(null, validator("a99_end"));
+    expect(null, validator("a9_end"));
+    expect(null, validator("z123456789_end"));
+
+    expect(error, validator("a99"));
+    expect(error, validator("a9"));
+    expect(error, validator("z123456789"));
+  });
+
+  test('Regex Email', () {
+    String error = "Field fails validation";
+    ValidationFn validator = FormValidator.builder().isAnEmail().build();
+
+    expect(error, validator(null));
+    expect(error, validator(""));
+
+    expect(null, validator("asdjnasdkjlansdkjasndljk@gmail.com"));
+    expect(null, validator("test@sankdnasdkl.com"));
+    expect(null, validator("test@gmail.co"));
+    expect(null, validator("test@gmail.coasdasda"));
+
+    expect(error, validator("test@@gmail.com"));
+    expect(error, validator("test@gmail..com"));
+    expect(error, validator("@gmail.com"));
+    expect(error, validator("@gmail.com"));
+    expect(error, validator("test@.com"));
+    expect(error, validator("test@gmail."));
+    expect(error, validator("test@gmail.c"));
   });
 }
