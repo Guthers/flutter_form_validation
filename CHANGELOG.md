@@ -22,3 +22,6 @@ Adds an example, and formats the library to 80 characters
 
 ## 1.0.3
 Fixes incorrect naming from `form_validator` to `text_form_validator`
+
+## 1.0.4
+Changes `intl` and `flutter_lints` version dependency to `any`

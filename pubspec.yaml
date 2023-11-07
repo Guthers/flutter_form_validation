@@ -2,19 +2,19 @@ name: text_form_validator
 description:
     Provides a simple way to combine validation functions, failing and
     providing the most informative error to the user.
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/Guthers/flutter_form_validation
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
-  intl: ^0.17.0
+  intl: any
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: any
