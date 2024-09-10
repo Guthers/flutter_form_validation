@@ -3,7 +3,7 @@ import "package:text_form_validator/form_validator.dart";
 
 void main() {
   test("Required form validation", () {
-    ValidationFn validator = FormValidator.builder().required().build();
+    ValidationFn validator = FormValidator.required().build();
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
     expect("Field can't be empty", validator(""));
@@ -11,9 +11,9 @@ void main() {
   });
 
   test("Required form validation different messages", () {
-    ValidationFn validator = FormValidator.builder()
-        .required(emptyError: "Bad empty!", nullError: "OeeeNullo")
-        .build();
+    ValidationFn validator =
+        FormValidator.required(emptyError: "Bad empty!", nullError: "OeeeNullo")
+            .build();
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
     expect("Bad empty!", validator(""));
@@ -21,8 +21,7 @@ void main() {
   });
 
   test("Numeric form validation", () {
-    ValidationFn validator =
-        FormValidator.builder().required().isNumeric().build();
+    ValidationFn validator = FormValidator.required().isNumeric().build();
     expect(null, validator("1.1001"));
     expect("Field must be a valid number", validator("This should fail"));
     expect("Field can't be empty", validator(""));
@@ -30,14 +29,11 @@ void main() {
   });
 
   test("DateTime form validation", () {
-    ValidationFn validator = FormValidator.builder()
-        .required()
-        .isDateTime(dateFormat: "dd.MM.yyyy")
-        .build();
+    ValidationFn validator =
+        FormValidator.required().isDateTime(dateFormat: "dd.MM.yyyy").build();
     expect(null, validator("10.02.1900"));
     expect("Field must be a valid date", validator("10/02/1900"));
-    ValidationFn validator2 =
-        FormValidator.builder().required().isDateTime().build();
+    ValidationFn validator2 = FormValidator.required().isDateTime().build();
     expect("Field must be a valid date", validator2("10.02.1900"));
     expect(null, validator2("10/02/1900"));
 
@@ -49,8 +45,8 @@ void main() {
   test("Custom function validators", () {
     String customError = "Number must be a multiple of 100!";
 
-    ValidationFn validator = FormValidator.builder()
-        .notNull(errorMessage: "Woah enter something!")
+    ValidationFn validator = FormValidator.notNull(
+            errorMessage: "Woah enter something!")
         .notEmpty()
         .isNumeric()
         // If it hits the custom we can assume the types will convert properly
@@ -70,7 +66,7 @@ void main() {
   test("Length GT Test", () {
     int len = 3;
     String error = "Field length not greater than 3";
-    ValidationFn validator = FormValidator.builder().lengthGt(len).build();
+    ValidationFn validator = FormValidator.lengthGt(len).build();
 
     // Null failure is undefined for this validation
     expect(null, validator(null));
@@ -84,7 +80,7 @@ void main() {
   test("Length GT EQ Test", () {
     int len = 3;
     String error = "Field length not greater than or equal too 3";
-    ValidationFn validator = FormValidator.builder().lengthGtEq(len).build();
+    ValidationFn validator = FormValidator.lengthGtEq(len).build();
 
     // Null failure is undefined for this validation
     expect(null, validator(null));
@@ -98,7 +94,7 @@ void main() {
   test("Length LT Test", () {
     int len = 3;
     String error = "Field length not less than 3";
-    ValidationFn validator = FormValidator.builder().lengthLt(len).build();
+    ValidationFn validator = FormValidator.lengthLt(len).build();
 
     // Null failure is undefined for this validation
     expect(null, validator(null));
@@ -112,7 +108,7 @@ void main() {
   test("Length LT EQ Test", () {
     int len = 3;
     String error = "Field length not less than or equal too 3";
-    ValidationFn validator = FormValidator.builder().lengthLtEq(len).build();
+    ValidationFn validator = FormValidator.lengthLtEq(len).build();
 
     // Null failure is undefined for this validation
     expect(null, validator(null));
@@ -126,7 +122,7 @@ void main() {
   test("Length EQ Test", () {
     int len = 3;
     String error = "Field length not equal too 3";
-    ValidationFn validator = FormValidator.builder().lengthEq(len).build();
+    ValidationFn validator = FormValidator.lengthEq(len).build();
 
     // Null failure is undefined for this validation
     expect(null, validator(null));
@@ -140,7 +136,7 @@ void main() {
   test("In List", () {
     List<String> list = ["a", "b", "c"];
     String error = "Unexpected value";
-    ValidationFn validator = FormValidator.builder().inList(list).build();
+    ValidationFn validator = FormValidator.inList(list).build();
 
     expect(error, validator(null));
     expect(error, validator(""));
@@ -154,7 +150,7 @@ void main() {
   test("Not In List", () {
     List<String> list = ["a", "b", "c"];
     String error = "Unexpected value";
-    ValidationFn validator = FormValidator.builder().notInList(list).build();
+    ValidationFn validator = FormValidator.notInList(list).build();
 
     expect(null, validator(null));
     expect(null, validator(""));
@@ -168,7 +164,7 @@ void main() {
   test("Regex", () {
     String pattern = r"[a-z][0-9]+_end";
     String error = "Field fails validation";
-    ValidationFn validator = FormValidator.builder().matches(pattern).build();
+    ValidationFn validator = FormValidator.matches(pattern).build();
 
     expect(error, validator(null));
     expect(error, validator(""));
@@ -184,7 +180,7 @@ void main() {
 
   test("Regex Email", () {
     String error = "Not a valid email";
-    ValidationFn validator = FormValidator.builder().isAnEmail().build();
+    ValidationFn validator = FormValidator.isAnEmail().build();
 
     expect(error, validator(null));
     expect(error, validator(""));
@@ -204,7 +200,7 @@ void main() {
 
     String error1 = "Oeee, bad stuff!";
     ValidationFn validator1 =
-        FormValidator.builder().isAnEmail(errorMessage: error1).build();
+        FormValidator.isAnEmail(errorMessage: error1).build();
 
     expect(error1, validator1(null));
     expect(error1, validator1(""));

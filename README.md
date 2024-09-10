@@ -24,7 +24,7 @@ TextFormField(validator: FormValidator.required().build());
 // All the messages which will be returned from validation can't be cusomtised
 // as required. Each validator is run one after the other, so the message
 // to the end user can be as specific as possible
-TextFormField(validator: FormValidator.builder()
+TextFormField(validator: FormValidator
     .notNull(nullError: "Woah enter something!")
     .notEmpty()
     .isNumeric()
@@ -33,7 +33,7 @@ TextFormField(validator: FormValidator.builder()
 // More complex validation can also be added on the fly
 String customError = "Number must be a multiple of 100!";
 
-ValidationFn validator = FormValidator.builder()
+ValidationFn validator = FormValidator
     .notNull(nullError: "Woah enter something!")
     .notEmpty()
     .isNumeric()

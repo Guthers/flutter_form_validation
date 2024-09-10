@@ -24,7 +24,7 @@ class DemoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: TextFormField(
-      validator: FormValidator.builder().required().build(),
+      validator: FormValidator.required().build(),
     ));
   }
 }
