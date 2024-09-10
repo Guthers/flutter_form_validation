@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:text_form_validator/form_validator.dart';
+import "package:flutter/material.dart";
+import "package:text_form_validator/form_validator.dart";
 
 /// A very simple example showing how to add a [FormValidator] to a [TextFormField]
 void main() {

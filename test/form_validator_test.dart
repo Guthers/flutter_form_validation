@@ -1,8 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:text_form_validator/form_validator.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:text_form_validator/form_validator.dart";
 
 void main() {
-  test('Required form validation', () {
+  test("Required form validation", () {
     ValidationFn validator = FormValidator.builder().required().build();
     expect(null, validator("This should be valid"));
     expect(null, validator("1.001"));
@@ -10,7 +10,7 @@ void main() {
     expect("Field can't be empty", validator(null));
   });
 
-  test('Required form validation different messages', () {
+  test("Required form validation different messages", () {
     ValidationFn validator = FormValidator.builder()
         .required(emptyError: "Bad empty!", nullError: "OeeeNullo")
         .build();
@@ -20,7 +20,7 @@ void main() {
     expect("OeeeNullo", validator(null));
   });
 
-  test('Numeric form validation', () {
+  test("Numeric form validation", () {
     ValidationFn validator =
         FormValidator.builder().required().isNumeric().build();
     expect(null, validator("1.1001"));
@@ -29,7 +29,7 @@ void main() {
     expect("Field can't be empty", validator(null));
   });
 
-  test('DateTime form validation', () {
+  test("DateTime form validation", () {
     ValidationFn validator = FormValidator.builder()
         .required()
         .isDateTime(dateFormat: "dd.MM.yyyy")
@@ -46,8 +46,8 @@ void main() {
     expect("Field can't be empty", validator(null));
   });
 
-  test('Custom function validators', () {
-    String customErorr = "Number must be a multiple of 100!";
+  test("Custom function validators", () {
+    String customError = "Number must be a multiple of 100!";
 
     ValidationFn validator = FormValidator.builder()
         .notNull(errorMessage: "Woah enter something!")
@@ -55,19 +55,19 @@ void main() {
         .isNumeric()
         // If it hits the custom we can assume the types will convert properly
         .custom((p0) =>
-            (p0 == null || (num.parse(p0) % 100) != 0) ? customErorr : null)
+            (p0 == null || (num.parse(p0) % 100) != 0) ? customError : null)
         .build();
 
     expect(null, validator("100"));
     expect(null, validator("1000"));
-    expect(customErorr, validator("1"));
-    expect(customErorr, validator("1.1001"));
+    expect(customError, validator("1"));
+    expect(customError, validator("1.1001"));
     expect("Field must be a valid number", validator("This should fail"));
     expect("Field can't be empty", validator(""));
     expect("Woah enter something!", validator(null));
   });
 
-  test('Length GT Test', () {
+  test("Length GT Test", () {
     int len = 3;
     String error = "Field length not greater than 3";
     ValidationFn validator = FormValidator.builder().lengthGt(len).build();
@@ -81,7 +81,7 @@ void main() {
     expect(null, validator("1234" * 5));
   });
 
-  test('Length GT EQ Test', () {
+  test("Length GT EQ Test", () {
     int len = 3;
     String error = "Field length not greater than or equal too 3";
     ValidationFn validator = FormValidator.builder().lengthGtEq(len).build();
@@ -95,7 +95,7 @@ void main() {
     expect(null, validator("1234" * 5));
   });
 
-  test('Length LT Test', () {
+  test("Length LT Test", () {
     int len = 3;
     String error = "Field length not less than 3";
     ValidationFn validator = FormValidator.builder().lengthLt(len).build();
@@ -109,7 +109,7 @@ void main() {
     expect(error, validator("1234" * 5));
   });
 
-  test('Length LT EQ Test', () {
+  test("Length LT EQ Test", () {
     int len = 3;
     String error = "Field length not less than or equal too 3";
     ValidationFn validator = FormValidator.builder().lengthLtEq(len).build();
@@ -123,7 +123,7 @@ void main() {
     expect(error, validator("1234" * 5));
   });
 
-  test('Length EQ Test', () {
+  test("Length EQ Test", () {
     int len = 3;
     String error = "Field length not equal too 3";
     ValidationFn validator = FormValidator.builder().lengthEq(len).build();
@@ -137,8 +137,8 @@ void main() {
     expect(error, validator("1234" * 5));
   });
 
-  test('In List', () {
-    List<String> list = ['a', 'b', 'c'];
+  test("In List", () {
+    List<String> list = ["a", "b", "c"];
     String error = "Unexpected value";
     ValidationFn validator = FormValidator.builder().inList(list).build();
 
@@ -151,8 +151,8 @@ void main() {
     expect(error, validator("cc"));
   });
 
-  test('Not In List', () {
-    List<String> list = ['a', 'b', 'c'];
+  test("Not In List", () {
+    List<String> list = ["a", "b", "c"];
     String error = "Unexpected value";
     ValidationFn validator = FormValidator.builder().notInList(list).build();
 
@@ -165,7 +165,7 @@ void main() {
     expect(null, validator("cc"));
   });
 
-  test('Regex', () {
+  test("Regex", () {
     String pattern = r"[a-z][0-9]+_end";
     String error = "Field fails validation";
     ValidationFn validator = FormValidator.builder().matches(pattern).build();
@@ -182,7 +182,7 @@ void main() {
     expect(error, validator("z123456789"));
   });
 
-  test('Regex Email', () {
+  test("Regex Email", () {
     String error = "Not a valid email";
     ValidationFn validator = FormValidator.builder().isAnEmail().build();
 

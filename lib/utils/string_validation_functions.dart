@@ -1,13 +1,13 @@
-import 'package:intl/intl.dart';
+import "package:intl/intl.dart";
 
 // This class provides the base validation functions used by the FormValidator
-class StraingValidationFunctions {
+class StringValidationFunctions {
   /// Checks that the string is not null then checks if the string is empty
   static String? required(String? checkValue,
       {String? nullErrorMessage, String? emptyErrorMessage}) {
-    return StraingValidationFunctions.notNull(checkValue,
+    return StringValidationFunctions.notNull(checkValue,
             errorMessage: nullErrorMessage) ??
-        StraingValidationFunctions.notEmpty(checkValue,
+        StringValidationFunctions.notEmpty(checkValue,
             errorMessage: emptyErrorMessage);
   }
 
@@ -147,7 +147,7 @@ class StraingValidationFunctions {
 
   /// Checks that the length of [checkValue] is equal to [eq]
   ///
-  /// If [checkValue] is not null and `checkValue.length` is nequal to [ltEq]
+  /// If [checkValue] is not null and `checkValue.length` is not equal to [ltEq]
   /// than [errorMessage] is returned if provided, else the default is provided.
   /// Otherwise null is returned
   static String? lengthEq(String? checkValue, int eq, {String? errorMessage}) {
@@ -160,7 +160,7 @@ class StraingValidationFunctions {
   /// Checks if [checkValue] is in the provided list
   ///
   /// If [checkValue] is not in the provided list than [errorMessage] will be
-  /// returned if provided, else the default message is returned. Othersie null
+  /// returned if provided, else the default message is returned. Otherwise null
   /// is returned
   static String? inList(String? checkValue, List<String> list,
       {String? errorMessage}) {
@@ -172,7 +172,7 @@ class StraingValidationFunctions {
   /// Checks if [checkValue] is not in the provided list
   ///
   /// If [checkValue] is in the provided list than [errorMessage] will be
-  /// returned if provided, else the default message is returned. Othersie null
+  /// returned if provided, else the default message is returned. Otherwise null
   /// is returned
   static String? notInList(String? checkValue, List<String> list,
       {String? errorMessage}) {
